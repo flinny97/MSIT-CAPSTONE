@@ -1,0 +1,18 @@
+# Participant data never belongs in version control
+data/participants/
+data/*.xlsx
+data/*.csv
+!data/sample/*.csv
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+venv/
+.venv/
+
+# Office and OS scratch files
+~$*
+.DS_Store
+Thumbs.db
