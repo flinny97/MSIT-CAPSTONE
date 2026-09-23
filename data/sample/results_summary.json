@@ -1,0 +1,39 @@
+{
+  "participants": 16,
+  "average_score": {
+    "pre": 57.19,
+    "post": 85.31,
+    "improvement": 28.12
+  },
+  "mastery_rate_post": 75.0,
+  "correct_response_rate": {
+    "pre": 53.12,
+    "post": 79.38,
+    "improvement": 26.26
+  },
+  "per_indicator_accuracy": {
+    "pre": {
+      "credential_request": 56.25,
+      "misleading_link": 45.83,
+      "suspicious_sender": 45.83,
+      "unexpected_attachment": 43.75,
+      "urgent_language": 52.08
+    },
+    "post": {
+      "credential_request": 83.33,
+      "misleading_link": 93.75,
+      "suspicious_sender": 87.5,
+      "unexpected_attachment": 85.42,
+      "urgent_language": 85.42
+    }
+  },
+  "false_alarm_rate": {
+    "pre": 17.5,
+    "post": 20.0
+  },
+  "success_criteria": {
+    "goal_3_score_improvement_20pp": true,
+    "goal_4_mastery_80pct_at_80": false,
+    "response_rate_improvement_20pp": true
+  }
+}
