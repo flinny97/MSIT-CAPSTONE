@@ -1,5 +1,3 @@
-
-
 Assignment Activity Unit 4
 
 Frank Lin
