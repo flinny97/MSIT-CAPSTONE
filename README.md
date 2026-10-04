@@ -24,7 +24,8 @@ measurement instrument built from free, widely available tools, designed to run 
 | --- | --- |
 | `docs/` | Written deliverables, literature review, project proposal, requirements and design specification, version control plan |
 | `design/` | System architecture diagram, data flow diagram, branching model, and the scripts that generate them |
-| `src/` | Source code for scoring assessments and computing the six evaluation metrics |
+| `src/` | Source code for validating responses, scoring assessments, and computing the six evaluation metrics |
+| `tests/` | Unit tests for the scoring rules, the validation module, and the command line loader |
 | `content/` | Training material, mock email set, phishing indicator checklist, response and reporting guide |
 | `assessments/` | Matched pre-training and post-training item banks and the item-to-indicator mapping |
 | `data/` | Result files. No real participant data is ever committed here. See `data/README.md` |
@@ -67,10 +68,16 @@ python3 src/scoring/score_assessments.py \
     --out  data/sample/results_summary.json
 ```
 
-Run the tests with:
+Before any score is calculated, every response passes through `src/scoring/validation.py`.
+Rows with a malformed participant ID, an unknown item, or an unknown action are skipped
+and reported. If a participant submits the same item twice, only the last answer is kept.
+Only participants who completed both the pre-test and the post-test are compared, and a
+blank answer counts as incorrect.
+
+Run the tests with a coverage report:
 
 ```bash
-python3 -m pytest tests/ -v
+python3 -m pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
 The files under `data/sample/` are synthetic records generated for testing. They contain no
@@ -78,12 +85,28 @@ real participant data.
 
 ## Branching model
 
-Two permanent branches:
+Two permanent branches, plus short-lived feature branches:
 
 - **`main`**, submitted, working versions only. Every commit on `main` corresponds to a
   deliverable that was handed in. Changes arrive only through a reviewed merge.
 - **`development`**, all working commits. Drafts, diagram revisions, and code changes land
   here first.
+- **`feature/...`**, one branch per piece of work, such as
+  `feature/unit5-validation-testing`. It is merged into `development` through a pull
+  request once the tests pass, and then deleted.
+
+## Tags and releases
+
+Each submitted milestone on `main` is tagged and published as a GitHub release.
+
+| Tag | Milestone |
+| --- | --- |
+| `v0.1-unit3-submission` | Initial development. Requirements, design, item bank, and first scoring code |
+| `v0.2-unit4-cicd` | GitHub Actions workflow runs the tests automatically |
+| `v0.3-unit5-testing` | Response validation, scoring fixes, and 46 unit tests with coverage |
+| `v1.0-final` | Planned. Final report and analysis of real participant results |
+
+See `CHANGELOG.md` for what changed in each release.
 
 Commit messages follow a `type: summary` convention (`docs:`, `design:`, `content:`,
 `assessment:`, `analysis:`, `chore:`, `test:`) so the log reads as a record of project
@@ -107,6 +130,8 @@ See `docs/version-control-plan.md` for the full rationale.
 | Project purpose, scope, literature review | 1 | Complete |
 | Proposal, SMART goals, feasibility, Gantt chart | 2 | Complete |
 | System architecture, requirements, version control | 3 | Complete |
-| Training module and assessment build | 4–5 | In progress |
-| Participant recruitment and data collection | 5–6 | Not started |
+| CI/CD workflow | 4 | Complete |
+| Core logic, unit testing, tags and releases | 5 | Complete |
+| Training module and assessment build | 5–6 | In progress |
+| Participant recruitment and data collection | 6 | Not started |
 | Analysis and final report | 7–8 | Not started |

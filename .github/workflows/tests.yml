@@ -4,7 +4,7 @@ on:
   push:
     branches: [development]
   pull_request:
-    branches: [main]
+    branches: [development, main]
 
 jobs:
   test:
@@ -16,8 +16,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install test tools
+        run: pip install -r requirements.txt
 
-      - name: Run scoring tests
-        run: pytest tests/ -v
+      - name: Run unit tests with coverage
+        run: pytest tests/ -v --cov=src --cov-report=term-missing
