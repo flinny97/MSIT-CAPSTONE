@@ -7,6 +7,8 @@
 | `unit3-requirements-and-design.md` | 3 | Functional and non-functional requirements, system design |
 | `version-control-plan.md` | 3 | Branching model, commit conventions, traceability |
 | `unit4-cicd-reflection.md` | 4 | CI/CD definition, tools, collaboration benefits, application to this project |
+| `unit5-testing-notes.md` | 5 | Test types used, issues the tests found, and the fixes made |
+| `submissions/` | | Word copies of submitted documents |
 
 The formatted Word versions submitted for each unit are kept with the course
 submissions. These files are the working copies that the repository tracks.
