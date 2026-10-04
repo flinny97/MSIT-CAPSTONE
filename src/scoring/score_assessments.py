@@ -30,7 +30,7 @@ from typing import Dict, List
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scoring import metrics  # noqa: E402
+from scoring import metrics, validation  # noqa: E402
 
 FORBIDDEN_COLUMNS = {"name", "full_name", "first_name", "last_name", "email", "employee_id"}
 TRUE_VALUES = {"1", "true", "yes", "y", "phishing", "t"}
@@ -82,15 +82,19 @@ def load_responses(path: Path) -> List[Dict]:
     return rows
 
 
-def check_matched(pre: List[Dict], post: List[Dict]) -> List[str]:
-    """Warn about participants who did not complete both assessments."""
-    pre_ids = {r["participant_id"] for r in pre}
-    post_ids = {r["participant_id"] for r in post}
+def collect_warnings(summary: Dict, pre: List[Dict], post: List[Dict],
+                     items: List[Dict]) -> List[str]:
+    """Collect every data problem so they show up before the results."""
     warnings = []
-    for pid in sorted(pre_ids - post_ids):
-        warnings.append(f"participant {pid} completed the pre-test but not the post-test")
-    for pid in sorted(post_ids - pre_ids):
-        warnings.append(f"participant {pid} completed the post-test but not the pre-test")
+    for label in ("pre", "post"):
+        for problem in summary["data_problems"][label]:
+            warnings.append(f"{label}-test {problem}")
+    for pid in summary["excluded_unmatched"]:
+        warnings.append(f"{pid} did not complete both tests and was left out of the comparison")
+    for label, rows in (("pre", pre), ("post", post)):
+        clean, _problems = validation.clean_responses(rows, items)
+        for pid, missing in validation.missing_answers(clean, items).items():
+            warnings.append(f"{label}-test {pid} left {len(missing)} item(s) blank: {', '.join(missing)}")
     return warnings
 
 
@@ -111,21 +115,22 @@ def format_report(summary: Dict) -> str:
         f"    Improvement                      : {avg['improvement']:+.2f} pp",
         f"    Scoring 80% or higher after      : {summary['mastery_rate_post']:.2f}%",
         "",
+        "  Per participant          Pre      Post     Change",
+    ]
+    for pid, row in summary["participant_improvement"].items():
+        lines.append(f"    {pid:<18}{row['pre']:7.2f}%  {row['post']:7.2f}%  {row['change']:+7.2f} pp")
+    lines += [
+        "",
         "  RQ2  Response",
         f"    Correct response rate pre        : {crr['pre']:.2f}%",
         f"    Correct response rate post       : {crr['post']:.2f}%",
         f"    Improvement                      : {crr['improvement']:+.2f} pp",
         "",
-        "  RQ3  Accuracy by indicator (phishing items, post-training)",
+        "  RQ3  Accuracy by indicator, most improved first",
     ]
-
-    post_ind = summary["per_indicator_accuracy"]["post"]
-    pre_ind = summary["per_indicator_accuracy"]["pre"]
-    for indicator in sorted(post_ind):
-        before = pre_ind.get(indicator, 0.0)
-        after = post_ind[indicator]
-        label = indicator.replace("_", " ")
-        lines.append(f"    {label:<26}: {after:6.2f}%  ({after - before:+.2f} pp)")
+    for row in summary["indicator_ranking"]:
+        label = row["indicator"].replace("_", " ")
+        lines.append(f"    {label:<26}: {row['post']:6.2f}%  ({row['change']:+.2f} pp)")
 
     lines += [
         "",
@@ -146,14 +151,14 @@ def format_report(summary: Dict) -> str:
     return "\n".join(lines)
 
 
-def main() -> int:
+def main(argv: List[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pre", required=True, type=Path, help="pre-training response CSV")
     parser.add_argument("--post", required=True, type=Path, help="post-training response CSV")
     parser.add_argument("--items", required=True, type=Path, help="item mapping CSV")
     parser.add_argument("--out", type=Path, help="optional JSON output path")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     for path in (args.pre, args.post, args.items):
         if not path.exists():
@@ -163,10 +168,10 @@ def main() -> int:
     pre = load_responses(args.pre)
     post = load_responses(args.post)
 
-    for warning in check_matched(pre, post):
+    summary = metrics.summarise(pre, post, items)
+    for warning in collect_warnings(summary, pre, post, items):
         print(f"  warning: {warning}", file=sys.stderr)
 
-    summary = metrics.summarise(pre, post, items)
     print(format_report(summary))
 
     if args.out:

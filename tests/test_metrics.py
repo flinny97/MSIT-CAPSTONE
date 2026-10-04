@@ -42,7 +42,7 @@ def test_all_wrong_scores_zero():
 def test_score_improvement_is_percentage_points():
     pre = [response("P01", "K1", False), response("P01", "K2", True)]
     post = [response("P01", "K1", True), response("P01", "K2", True)]
-    assert metrics.score_improvement(pre, post, ITEMS) == 50.0
+    assert metrics.score_improvement(pre, post, ITEMS[:2]) == 50.0
 
 
 def test_mastery_rate_counts_participants_at_threshold():
@@ -111,7 +111,7 @@ def test_empty_input_does_not_raise():
 def test_summarise_reports_success_criteria():
     pre = [response(f"P{i:02d}", "K1", False) for i in range(10)]
     post = [response(f"P{i:02d}", "K1", True) for i in range(10)]
-    summary = metrics.summarise(pre, post, ITEMS)
+    summary = metrics.summarise(pre, post, ITEMS[:1])
     assert summary["average_score"]["improvement"] == 100.0
     assert summary["success_criteria"]["goal_3_score_improvement_20pp"] is True
     assert summary["success_criteria"]["goal_4_mastery_80pct_at_80"] is True
