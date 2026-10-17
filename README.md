@@ -82,6 +82,20 @@ Run the tests with a coverage report:
 python3 -m pytest tests/ -v --cov=src --cov=webapp --cov-report=term-missing
 ```
 
+The tests cover four levels:
+
+| Level | Files | What they check |
+| --- | --- | --- |
+| Unit | `test_metrics.py`, `test_scoring_rules.py`, `test_validation.py`, `test_command_line.py`, `test_scoring_bridge.py` | Scoring rules and validation on their own |
+| Integration | `test_webapp_api.py`, `test_integration_flow.py` | API, database, and scoring working together |
+| System | `tests/system/` | The full participant journey in a real browser (Playwright and Chromium) |
+| Acceptance | `tests/acceptance/` | Each Unit 3 requirement, plus the manual checklist in `docs/unit7-acceptance-checklist.md` |
+
+The system tests need a browser the first time: `python -m playwright install chromium`.
+If it is not installed, those tests are skipped and the rest still run. With the app
+running, `python scripts/stability_test.py` sends 60 participants through both tests,
+20 at a time, and checks that the database saved exactly what was sent.
+
 The files under `data/sample/` are synthetic records generated for testing. They contain no
 real participant data.
 
@@ -131,6 +145,7 @@ Each submitted milestone on `main` is tagged and published as a GitHub release.
 | `v0.2-unit4-cicd` | GitHub Actions workflow runs the tests automatically |
 | `v0.3-unit5-testing` | Response validation, scoring fixes, and 46 unit tests with coverage |
 | `v0.4-unit6-integration` | Web app connecting all four modules, evaluation, and deployment plan |
+| `v0.5-unit7-testing` | Integration, system, and acceptance testing, two bug fixes, two usability fixes, maintenance plan |
 | `v1.0-final` | Planned. Final report and analysis of real participant results |
 
 See `CHANGELOG.md` for what changed in each release.
@@ -139,14 +154,17 @@ Commit messages follow a `type: summary` convention (`docs:`, `design:`, `conten
 `assessment:`, `analysis:`, `chore:`, `test:`) so the log reads as a record of project
 progress rather than a list of file saves.
 
-See `docs/version-control-plan.md` for the full rationale.
+See `docs/version-control-plan.md` for the full rationale and `docs/maintenance-plan.md`
+for how updates, bug fixes, and enhancement requests are handled after deployment.
 
 ## Ethics and safety
 
 - Participants give informed consent before any assessment.
 - Records are keyed by participant ID. No names are stored with scores.
-- All mock phishing content uses fictional names and disabled links. No live malware,
-  no working credential forms, no real phishing emails are ever sent.
+- Example emails are either screenshots of real phishing emails that universities and
+  Microsoft published as public warnings, or use a fictional company. They are images
+  only, so nothing in them can be clicked. No live malware, no working credential forms,
+  and no phishing emails are ever sent.
 - Before real data collection, the database will be encrypted and the researcher
   dashboard will require a login, per NIST SP 800-53. Only participant IDs are stored.
 - All participant data is deleted after the final report is submitted.
@@ -162,5 +180,7 @@ See `docs/version-control-plan.md` for the full rationale.
 | Core logic, unit testing, tags and releases | 5 | Complete |
 | Training module and assessment build | 5–6 | Complete |
 | System integration, evaluation, and deployment plan | 6 | Complete |
+| System testing and maintenance plan | 7 | Complete |
 | Participant recruitment and data collection | 6 | Not started |
-| Analysis and final report | 7–8 | Not started |
+| Initial project report | 7 | In progress |
+| Analysis and final report | 8 | Not started |

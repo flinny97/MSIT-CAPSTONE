@@ -1,0 +1,18 @@
+# Preventive maintenance: once a month, open a pull request when a library or a
+# GitHub Action has a newer version. The tests run on every pull request, so an
+# update is only merged if everything still passes.
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    target-branch: "development"
+    labels: ["maintenance"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    target-branch: "development"
+    labels: ["maintenance"]
