@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Training Lesson{% endblock %}
+{% block content %}
+<article class="lesson">
+{{ lesson | safe }}
+</article>
+<button id="to-post">Continue to the post-assessment</button>
+{% endblock %}
+{% block scripts %}<script>initTraining();</script>{% endblock %}

@@ -20,3 +20,9 @@ Thumbs.db
 # Test coverage output
 .coverage
 htmlcov/
+
+# Web app: local database and the question screenshots (other people's images, not published)
+instance/
+
+# Charts made by scripts/make_charts.py
+charts/

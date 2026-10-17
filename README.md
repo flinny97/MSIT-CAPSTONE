@@ -29,6 +29,8 @@ measurement instrument built from free, widely available tools, designed to run 
 | `content/` | Training material, mock email set, phishing indicator checklist, response and reporting guide |
 | `assessments/` | Matched pre-training and post-training item banks and the item-to-indicator mapping |
 | `data/` | Result files. No real participant data is ever committed here. See `data/README.md` |
+| `webapp/` | Flask web app that connects the training, assessments, database, and scoring |
+| `scripts/` | Synthetic demo data, load test, and chart scripts |
 
 ## The five phishing indicators
 
@@ -77,11 +79,35 @@ blank answer counts as incorrect.
 Run the tests with a coverage report:
 
 ```bash
-python3 -m pytest tests/ -v --cov=src --cov-report=term-missing
+python3 -m pytest tests/ -v --cov=src --cov=webapp --cov-report=term-missing
 ```
 
 The files under `data/sample/` are synthetic records generated for testing. They contain no
 real participant data.
+
+## Running the web app
+
+```bash
+python -m pip install -r requirements.txt
+python app.py
+```
+
+Open http://127.0.0.1:5000 for the participant pages and http://127.0.0.1:5000/admin for
+the researcher dashboard. Settings come from environment variables, listed in
+`.env.example`. The database is created in `instance/` the first time the app starts.
+
+The question screenshots are not in the repository. Copy them into
+`instance/screenshots/` before running the assessments.
+
+To fill the dashboard with made-up participants for testing:
+
+```bash
+python scripts/seed_demo.py
+```
+
+Delete `instance/capstone.db` before real data collection so the synthetic records are
+removed. With the app running, `python scripts/load_test.py` measures throughput and
+`python scripts/make_charts.py` saves the charts in `charts/`.
 
 ## Branching model
 
@@ -104,6 +130,7 @@ Each submitted milestone on `main` is tagged and published as a GitHub release.
 | `v0.1-unit3-submission` | Initial development. Requirements, design, item bank, and first scoring code |
 | `v0.2-unit4-cicd` | GitHub Actions workflow runs the tests automatically |
 | `v0.3-unit5-testing` | Response validation, scoring fixes, and 46 unit tests with coverage |
+| `v0.4-unit6-integration` | Web app connecting all four modules, evaluation, and deployment plan |
 | `v1.0-final` | Planned. Final report and analysis of real participant results |
 
 See `CHANGELOG.md` for what changed in each release.
@@ -120,7 +147,8 @@ See `docs/version-control-plan.md` for the full rationale.
 - Records are keyed by participant ID. No names are stored with scores.
 - All mock phishing content uses fictional names and disabled links. No live malware,
   no working credential forms, no real phishing emails are ever sent.
-- Result files are encrypted and access follows least privilege, per NIST SP 800-53.
+- Before real data collection, the database will be encrypted and the researcher
+  dashboard will require a login, per NIST SP 800-53. Only participant IDs are stored.
 - All participant data is deleted after the final report is submitted.
 
 ## Status
@@ -132,6 +160,7 @@ See `docs/version-control-plan.md` for the full rationale.
 | System architecture, requirements, version control | 3 | Complete |
 | CI/CD workflow | 4 | Complete |
 | Core logic, unit testing, tags and releases | 5 | Complete |
-| Training module and assessment build | 5–6 | In progress |
+| Training module and assessment build | 5–6 | Complete |
+| System integration, evaluation, and deployment plan | 6 | Complete |
 | Participant recruitment and data collection | 6 | Not started |
 | Analysis and final report | 7–8 | Not started |

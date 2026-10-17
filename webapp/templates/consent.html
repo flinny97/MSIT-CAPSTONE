@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome</h1>
+<p>This training has three steps: a 10-question pre-assessment, a short lesson on how to spot and report
+phishing, and a 10-question post-assessment. It takes about 30 minutes.</p>
+<p>Your answers are stored only with the participant ID you were given. Do not enter your name or email
+address. You can stop at any time. A test you do not finish is not included in the results.</p>
+
+<form id="consent-form" class="card">
+  <label for="pid">Participant ID</label>
+  <input id="pid" name="pid" placeholder="P01" autocomplete="off" required>
+  <label class="check"><input type="checkbox" id="consent"> I have read the consent form and agree to take part.</label>
+  <button type="submit">Start the pre-assessment</button>
+  <p id="message" class="message" role="alert"></p>
+</form>
+{% endblock %}
+{% block scripts %}<script>initConsent();</script>{% endblock %}
