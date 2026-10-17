@@ -91,6 +91,7 @@ The tests cover four levels:
 | System | `tests/system/` | The full participant journey in a real browser (Playwright and Chromium) |
 | Acceptance | `tests/acceptance/` | Each Unit 3 requirement, plus the manual checklist in `docs/unit7-acceptance-checklist.md` |
 
+Each level can be run on its own, for example `pytest -m unit` or `pytest -m system`.
 The system tests need a browser the first time: `python -m playwright install chromium`.
 If it is not installed, those tests are skipped and the rest still run. With the app
 running, `python scripts/stability_test.py` sends 60 participants through both tests,
