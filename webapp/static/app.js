@@ -7,7 +7,12 @@ async function callApi(method, url, body) {
   if (body !== undefined) options.body = JSON.stringify(body);
   const response = await fetch(url, options);
   const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Something went wrong.");
+  if (!response.ok) {
+    // Keep the full reply with the error so the page can use details like the missing questions
+    const problem = new Error(data.error || "Something went wrong.");
+    problem.data = data;
+    throw problem;
+  }
   return data;
 }
 
@@ -55,6 +60,36 @@ function questionHtml(q) {
     </section>`;
 }
 
+// A question counts as answered when it has a choice and a confidence rating
+function isAnswered(section) {
+  const choice = section.querySelector(`input[name="${section.id}"]:checked`);
+  const conf = section.querySelector(`input[name="${section.id}-conf"]:checked`);
+  return Boolean(choice && conf);
+}
+
+// Progress counter (added in Unit 7). It also clears the highlight once a question is finished.
+function updateProgress() {
+  const sections = document.querySelectorAll("section.question");
+  let done = 0;
+  sections.forEach((section) => {
+    if (isAnswered(section)) {
+      done += 1;
+      section.classList.remove("needs-answer");
+    }
+  });
+  document.getElementById("progress").textContent = `${done} of ${sections.length} questions answered`;
+}
+
+// Highlight the questions the API says are missing and move to the first one (added in Unit 7)
+function highlightMissing(items) {
+  items.forEach((item) => {
+    const section = document.getElementById(item);
+    if (section) section.classList.add("needs-answer");
+  });
+  const first = document.getElementById(items[0]);
+  if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
 // Pre and post assessment pages: load the questions, start the attempt, submit the answers
 async function initTest(test) {
   const pid = currentParticipant();
@@ -64,6 +99,8 @@ async function initTest(test) {
     await callApi("POST", `/api/tests/${test}/start`, { participant_id: pid });
     const questions = await callApi("GET", `/api/tests/${test}/questions`);
     document.getElementById("questions").innerHTML = questions.map(questionHtml).join("");
+    document.getElementById("questions").addEventListener("change", updateProgress);
+    updateProgress();
   } catch (err) {
     document.getElementById("questions").textContent = "";
     showMessage(err.message);
@@ -92,8 +129,9 @@ async function initTest(test) {
       box.classList.remove("hidden");
       window.scrollTo(0, 0);
     } catch (err) {
-      // Show the error from the API, for example a missing question
+      // Show the error from the API and highlight any missing questions
       showMessage(err.message);
+      if (err.data && err.data.missing) highlightMissing(err.data.missing);
     }
   });
 }

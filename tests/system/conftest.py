@@ -44,7 +44,10 @@ def live_app(tmp_path):
 @pytest.fixture(scope="session")
 def browser():
     with playwright_api.sync_playwright() as p:
-        browser = p.chromium.launch()
+        try:
+            browser = p.chromium.launch()
+        except Exception:
+            pytest.skip("Chromium is not installed. Run: python -m playwright install chromium")
         yield browser
         browser.close()
 

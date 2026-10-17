@@ -20,9 +20,15 @@ api = Blueprint("api", __name__, url_prefix="/api")
 TESTS = ("pre", "post")
 
 
-def error(message, status=400):
-    # Send an error message back to the page
-    return jsonify({"error": message}), status
+def error(message, status=400, **extra):
+    # Send an error message back to the page, plus any extra details (like missing questions)
+    return jsonify({"error": message, **extra}), status
+
+
+def is_rating(value):
+    # A rating has to be a whole number from 1 to 5. True and False are refused because
+    # Python would otherwise treat True as 1 and save it (found in Unit 7 testing).
+    return isinstance(value, int) and not isinstance(value, bool) and 1 <= value <= 5
 
 
 def participant_exists(pid):
@@ -131,6 +137,11 @@ def submit_test(test):
     if attempt_status(pid, test) != "started":
         return error("Start the test before submitting it, and submit it only once.", 409)
 
+    # The answers have to come in as one entry per question. Anything else is refused
+    # with a clear message instead of crashing the server (found in Unit 7 testing).
+    if not isinstance(answers, dict):
+        return error("The answers were not sent in the right format. Please submit the test again.")
+
     # Get the correct answer for each question
     db = get_db()
     key = {}
@@ -141,14 +152,19 @@ def submit_test(test):
     # If anything is missing, nothing is saved and the test stays "started".
     missing = []
     for item in key:
-        answer = answers.get(item) or {}
+        answer = answers.get(item)
+        if not isinstance(answer, dict):
+            missing.append(item)
+            continue
         no_choice = answer.get("choice") not in ("a", "b", "c", "d")
-        no_rating = answer.get("confidence") not in (1, 2, 3, 4, 5)
+        no_rating = not is_rating(answer.get("confidence"))
         if no_choice or no_rating:
             missing.append(item)
     if missing:
+        # The list of missing questions is also sent on its own so the page can highlight them
         missing.sort(key=lambda item: int(item[1:]))
-        return error("Answer every question and rate how sure you are. Missing: " + ", ".join(missing))
+        return error("Answer every question and rate how sure you are. Missing: " + ", ".join(missing),
+                     missing=missing)
 
     # Save every answer and mark the test as completed
     rows = []
@@ -180,7 +196,7 @@ def submit_feedback():
     # Feedback is only collected after the post-assessment
     if attempt_status(pid, "post") != "completed":
         return error("Feedback is collected after the post-assessment.", 409)
-    if rating not in (1, 2, 3, 4, 5):
+    if not is_rating(rating):
         return error("Choose an ease rating from 1 to 5.")
 
     # Save the feedback into the database
