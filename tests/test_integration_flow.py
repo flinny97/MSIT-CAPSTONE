@@ -127,3 +127,34 @@ def test_results_are_the_same_every_time_they_are_requested(client):
     first = client.get("/api/results/summary").get_json()
     second = client.get("/api/results/summary").get_json()
     assert first == second
+
+
+# --- the researcher dashboard is protected (added in Unit 7) ----------------
+
+def test_dashboard_needs_the_password_when_one_is_set(tmp_path):
+    app = create_app({"DATABASE": str(tmp_path / "t.db"), "SCREENSHOT_DIR": str(tmp_path),
+                      "ADMIN_PASSWORD": "long-test-password"})
+    client = app.test_client()
+    assert client.get("/admin").status_code == 401
+    assert client.get("/admin", auth=("researcher", "wrong")).status_code == 401
+    assert client.get("/api/results/summary").status_code == 401
+    assert client.get("/admin", auth=("researcher", "long-test-password")).status_code == 200
+    assert client.get("/api/results/summary", auth=("researcher", "long-test-password")).status_code == 200
+
+
+def test_dashboard_only_opens_on_this_computer_without_a_password(client):
+    outside = {"REMOTE_ADDR": "203.0.113.5"}
+    assert client.get("/admin", environ_base=outside).status_code == 403
+    assert client.get("/api/metrics/performance", environ_base=outside).status_code == 403
+    assert client.get("/admin").status_code == 200          # the test client counts as this computer
+
+
+def test_participant_pages_never_ask_for_the_password(tmp_path):
+    app = create_app({"DATABASE": str(tmp_path / "t.db"), "SCREENSHOT_DIR": str(tmp_path),
+                      "ADMIN_PASSWORD": "long-test-password"})
+    client = app.test_client()
+    outside = {"REMOTE_ADDR": "203.0.113.5"}
+    assert client.get("/", environ_base=outside).status_code == 200
+    assert client.get("/api/tests/pre/questions", environ_base=outside).status_code == 200
+    reply = client.post("/api/participants", json={"participant_id": "P01", "consent": True}, environ_base=outside)
+    assert reply.status_code == 201

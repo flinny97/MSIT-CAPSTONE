@@ -5,13 +5,17 @@
 #   M3 data storage       -> db.py (SQLite)
 #   M4 scoring            -> scoring_bridge.py -> src/scoring/metrics.py
 
+import hmac
 import re
 import time
 
-from flask import Flask, g, request
+from flask import Flask, Response, g, request
 
 from .config import load_settings
 from .db import close_db, get_db, init_db, now
+
+# Pages and API routes that show results. Only the researcher can open these.
+RESEARCHER_PATHS = {"/admin", "/api/results/summary", "/api/metrics/performance"}
 
 
 def create_app(overrides=None):
@@ -29,6 +33,25 @@ def create_app(overrides=None):
     @app.before_request
     def start_timer():
         g.started = time.perf_counter()
+
+    # Protect the researcher dashboard and the results (added in Unit 7).
+    # With a password set, the browser asks for it. Without one, these pages only
+    # open on this computer, so the results are never public by accident.
+    @app.before_request
+    def check_researcher_access():
+        if request.path not in RESEARCHER_PATHS:
+            return None
+        password = app.config.get("ADMIN_PASSWORD", "")
+        if password:
+            given = request.authorization.password if request.authorization else None
+            if given and hmac.compare_digest(given.encode(), password.encode()):
+                return None
+            return Response("Researcher login required.", 401,
+                            {"WWW-Authenticate": 'Basic realm="Researcher dashboard"'})
+        if request.remote_addr not in ("127.0.0.1", "::1"):
+            return Response("The dashboard only opens on this computer until "
+                            "CAPSTONE_ADMIN_PASSWORD is set.", 403)
+        return None
 
     # Save how long each API call took. This is the latency data for the evaluation.
     @app.after_request
