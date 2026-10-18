@@ -2,7 +2,8 @@
 Acceptance tests for Unit 7.
 
 Each test checks one requirement from the Unit 3 design (FR = functional,
-NFR = non-functional). Together with the manual walkthrough in
+NFR = non-functional). FR2, FR4, and FR5 are checked in their revised Unit 6
+form (see "Requirement revisions" in docs/unit3-requirements-and-design.md). Together with the manual walkthrough in
 docs/unit7-acceptance-checklist.md, they show whether the system is ready for
 the pilot. Only synthetic participant IDs are used.
 """

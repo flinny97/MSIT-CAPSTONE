@@ -109,7 +109,8 @@ python app.py
 
 Open http://127.0.0.1:5000 for the participant pages and http://127.0.0.1:5000/admin for
 the researcher dashboard. Settings come from environment variables, listed in
-`.env.example`. The database is created in `instance/` the first time the app starts.
+`.env.example`. The dashboard opens without a password on your own computer. On a server,
+set `CAPSTONE_ADMIN_PASSWORD` and the browser will ask for it. The database is created in `instance/` the first time the app starts.
 
 The question screenshots are not in the repository. Copy them into
 `instance/screenshots/` before running the assessments.
@@ -146,7 +147,7 @@ Each submitted milestone on `main` is tagged and published as a GitHub release.
 | `v0.2-unit4-cicd` | GitHub Actions workflow runs the tests automatically |
 | `v0.3-unit5-testing` | Response validation, scoring fixes, and 46 unit tests with coverage |
 | `v0.4-unit6-integration` | Web app connecting all four modules, evaluation, and deployment plan |
-| `v0.5-unit7-testing` | Integration, system, and acceptance testing, two bug fixes, two usability fixes, maintenance plan |
+| `v0.5-unit7-testing` | Integration, system, and acceptance testing, bug and usability fixes, dashboard password, maintenance plan |
 | `v1.0-final` | Planned. Final report and analysis of real participant results |
 
 See `CHANGELOG.md` for what changed in each release.
@@ -166,8 +167,9 @@ for how updates, bug fixes, and enhancement requests are handled after deploymen
   Microsoft published as public warnings, or use a fictional company. They are images
   only, so nothing in them can be clicked. No live malware, no working credential forms,
   and no phishing emails are ever sent.
-- Before real data collection, the database will be encrypted and the researcher
-  dashboard will require a login, per NIST SP 800-53. Only participant IDs are stored.
+- The researcher dashboard needs a password on a server and only opens locally without
+  one. The database file will be encrypted before real data collection, per NIST SP 800-53.
+  Only participant IDs are stored.
 - All participant data is deleted after the final report is submitted.
 
 ## Status

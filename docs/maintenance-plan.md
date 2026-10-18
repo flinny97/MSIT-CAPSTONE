@@ -34,8 +34,8 @@
 | Risk | Mitigation |
 | --- | --- |
 | A security problem in Flask or another library | Dependabot updates every month, debug mode off, secret key set on the server |
-| The dashboard can be opened by anyone with the link | Add a password to the dashboard before the site is deployed |
-| Participant data is exposed or the file is lost | No names or emails stored, backups after each session, data deleted after the report |
+| The dashboard password is weak or shared | A long password set only on the server in `CAPSTONE_ADMIN_PASSWORD`, changed after the pilot |
+| Participant data is exposed or the file is lost | No names or emails stored, the database file encrypted before real data is collected, backups after each session, data deleted after the report |
 | Data inconsistency, such as partial or duplicate tests | Server-side validation, only completed tests are scored, stability test after each update |
 | Usability problems for participants | Ease ratings and comments reviewed weekly, small fixes released between sessions |
 | The free hosted site expires or goes down | Monthly reminder to renew, the app can run locally from the last tag |

@@ -15,7 +15,7 @@ Use synthetic IDs only (P90 to P93). Start with a fresh database: close the app,
 | A8 | FR4 post-assessment | Continue to the post-assessment, answer all, submit | 10 questions, then the score and a Continue button | |
 | A9 | Feedback | Pick an ease rating and click Finish | "Thank you" message | |
 | A10 | FR2 rule | Open http://127.0.0.1:5000/test/post?pid=P91 after registering P91 only | Message says the pre-assessment has to be finished first | |
-| A11 | FR7, FR8 dashboard | Open http://127.0.0.1:5000/admin | P90 is counted, the success criteria and the five warning signs are shown | |
+| A11 | FR7, FR8 dashboard | Open http://127.0.0.1:5000/admin (no password is needed on your own computer) | P90 is counted, the success criteria and the five warning signs are shown | |
 | A12 | NFR5 safety | Click on each screenshot in the questions | Nothing opens. The screenshots are images only | |
 
 Tester: Frank Lin. Date: ______. Overall result: ______.
