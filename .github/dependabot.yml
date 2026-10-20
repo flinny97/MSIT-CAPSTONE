@@ -1,6 +1,5 @@
-# Preventive maintenance: once a month, open a pull request when a library or a
-# GitHub Action has a newer version. The tests run on every pull request, so an
-# update is only merged if everything still passes.
+# Check once a month for newer versions of the libraries and GitHub Actions
+# Each update comes as a pull request, so the tests run before it is merged
 version: 2
 updates:
   - package-ecosystem: "pip"

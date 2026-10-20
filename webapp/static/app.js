@@ -8,7 +8,7 @@ async function callApi(method, url, body) {
   const response = await fetch(url, options);
   const data = await response.json();
   if (!response.ok) {
-    // Keep the full reply with the error so the page can use details like the missing questions
+    // Keep the full error reply so the page can see which questions are missing
     const problem = new Error(data.error || "Something went wrong.");
     problem.data = data;
     throw problem;
@@ -67,7 +67,7 @@ function isAnswered(section) {
   return Boolean(choice && conf);
 }
 
-// Progress counter (added in Unit 7). It also clears the highlight once a question is finished.
+// Update the progress counter and clear the highlight once a question is finished
 function updateProgress() {
   const sections = document.querySelectorAll("section.question");
   let done = 0;
@@ -80,7 +80,7 @@ function updateProgress() {
   document.getElementById("progress").textContent = `${done} of ${sections.length} questions answered`;
 }
 
-// Highlight the questions the API says are missing and move to the first one (added in Unit 7)
+// Highlight the missing questions and scroll to the first one
 function highlightMissing(items) {
   items.forEach((item) => {
     const section = document.getElementById(item);

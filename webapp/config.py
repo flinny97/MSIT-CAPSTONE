@@ -21,8 +21,8 @@ def load_settings():
         # Debug mode stays off unless it is turned on
         "DEBUG": os.environ.get("CAPSTONE_DEBUG", "0") == "1",
         "PORT": int(os.environ.get("PORT", "5000")),
-        # Password for the researcher dashboard. If it is empty, the dashboard only
-        # opens on this computer. It must be set on a real server (added in Unit 7).
+        # Password for the researcher dashboard
+        # If it is empty, the dashboard only opens on this computer
         "ADMIN_PASSWORD": os.environ.get("CAPSTONE_ADMIN_PASSWORD", ""),
         # Question bank and training lesson that are loaded when the app starts
         "QUESTIONS_FILE": str(ROOT / "assessments" / "questions.json"),

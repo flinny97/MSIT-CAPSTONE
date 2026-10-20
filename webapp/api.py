@@ -21,13 +21,13 @@ TESTS = ("pre", "post")
 
 
 def error(message, status=400, **extra):
-    # Send an error message back to the page, plus any extra details (like missing questions)
+    # Send an error message back to the page, and the missing questions if there are any
     return jsonify({"error": message, **extra}), status
 
 
 def is_rating(value):
-    # A rating has to be a whole number from 1 to 5. True and False are refused because
-    # Python would otherwise treat True as 1 and save it (found in Unit 7 testing).
+    # Check that a rating is a whole number from 1 to 5
+    # True and False are refused because Python treats True as 1
     return isinstance(value, int) and not isinstance(value, bool) and 1 <= value <= 5
 
 
@@ -137,8 +137,8 @@ def submit_test(test):
     if attempt_status(pid, test) != "started":
         return error("Start the test before submitting it, and submit it only once.", 409)
 
-    # The answers have to come in as one entry per question. Anything else is refused
-    # with a clear message instead of crashing the server (found in Unit 7 testing).
+    # Make sure the answers are correctly formatted
+    # Everything else gets a clear message instead of crashing the server
     if not isinstance(answers, dict):
         return error("The answers were not sent in the right format. Please submit the test again.")
 
@@ -161,7 +161,7 @@ def submit_test(test):
         if no_choice or no_rating:
             missing.append(item)
     if missing:
-        # The list of missing questions is also sent on its own so the page can highlight them
+        # Also send the missing questions as a list so the page can highlight them
         missing.sort(key=lambda item: int(item[1:]))
         return error("Answer every question and rate how sure you are. Missing: " + ", ".join(missing),
                      missing=missing)

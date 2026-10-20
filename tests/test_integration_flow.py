@@ -129,7 +129,7 @@ def test_results_are_the_same_every_time_they_are_requested(client):
     assert first == second
 
 
-# --- the researcher dashboard is protected (added in Unit 7) ----------------
+# --- the researcher dashboard is protected ---------------------------------
 
 def test_dashboard_needs_the_password_when_one_is_set(tmp_path):
     app = create_app({"DATABASE": str(tmp_path / "t.db"), "SCREENSHOT_DIR": str(tmp_path),
