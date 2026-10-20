@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.4-unit6-integration
+
+- Added a Flask web app (`webapp/`) that connects the four modules: training lesson (M1),
+  pre and post assessments (M2), SQLite data store (M3), and the Unit 5 scoring code (M4).
+- Added a JSON API. The pages only talk to the database through the API, and the
+  correct answers are never sent to the browser.
+- A test is only saved when every question has an answer and a confidence rating. Tests
+  that were started but not finished are left out of the results and listed separately.
+- The post-assessment cannot start until the pre-assessment is finished, and a test
+  cannot be submitted twice.
+- Added `webapp/scoring_bridge.py` so the multiple choice answers are scored by the same
+  tested code in `src/scoring/metrics.py`.
+- Added a researcher dashboard, a feedback form, and response time logging for each API
+  route.
+- Settings now come from environment variables. See `.env.example`.
+- Added `scripts/seed_demo.py` (synthetic participants), `scripts/load_test.py`, and
+  `scripts/make_charts.py`.
+- 69 tests pass with 98 percent line coverage. The workflow now measures coverage for
+  `webapp/` as well.
+
 ## v0.3-unit5-testing
 
 - Added `src/scoring/validation.py`. Responses are checked before scoring for participant

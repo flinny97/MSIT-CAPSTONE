@@ -1,0 +1,345 @@
+{
+  "note": "Questions from the Unit 6 training packet. Q1-Q10 test the same warning sign in both assessments.",
+  "questions": [
+    {
+      "test": "pre",
+      "number": 1,
+      "item_id": "Q1",
+      "prompt": "This email was sent to employees. It says their mailbox is full and shows the Microsoft name and logo. Before you click anything, what should you check?",
+      "options": {
+        "a": "Whether the Microsoft logo and colors look correct",
+        "b": "The full email address of the sender, not just the display name",
+        "c": "Whether the storage numbers in the email are correct",
+        "d": "Whether the email has a privacy notice at the bottom"
+      },
+      "answer": "b",
+      "indicator": "suspicious_sender",
+      "type": "Recognition",
+      "image": "Figure 1 - Pre Q1.png",
+      "caption": "Mailbox storage alert email."
+    },
+    {
+      "test": "pre",
+      "number": 2,
+      "item_id": "Q2",
+      "prompt": "This email claims your Microsoft account is being deactivated. Which part of the message is meant to make you act with urgency?",
+      "options": {
+        "a": "It greets you by your username instead of your real name",
+        "b": "The sender shows only \"Microsoft account team\" with no email address",
+        "c": "It tells you to ignore the message if you made the request",
+        "d": "It says the deactivation has already started and is marked \"High importance\""
+      },
+      "answer": "d",
+      "indicator": "urgent_language",
+      "type": "Recognition",
+      "image": "Figure 2 - Pre Q2.png",
+      "caption": "Email claiming a Microsoft account is being deactivated."
+    },
+    {
+      "test": "pre",
+      "number": 3,
+      "item_id": "Q3",
+      "prompt": "A link in an email opens a page that asks you to sign in to Microsoft 365. Remember that the real Harborline sign-in page is https://login.harborline.example. Which address is the only safe one to sign in on?",
+      "options": {
+        "a": "https://login.harborline.example",
+        "b": "https://login.harb0rline.example",
+        "c": "https://login.harborline.example.account-check.example",
+        "d": "https://harborline-login.example"
+      },
+      "answer": "a",
+      "indicator": "misleading_link",
+      "type": "Recognition",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "pre",
+      "number": 4,
+      "item_id": "Q4",
+      "prompt": "Employees received an email saying they had a new voice message. The message came as an attached HTML file instead of a normal voicemail. What should you do?",
+      "options": {
+        "a": "Open the attachment so you can listen to the voice message",
+        "b": "Forward the email to a coworker and ask them to open it first",
+        "c": "Do not open it, and report it with the Report Phishing button",
+        "d": "Reply to the sender and ask who left the voice message for you"
+      },
+      "answer": "c",
+      "indicator": "unexpected_attachment",
+      "type": "Response",
+      "image": "Figure 3 - Pre Q4.png",
+      "caption": "Voicemail-themed email with an HTML attachment."
+    },
+    {
+      "test": "pre",
+      "number": 5,
+      "item_id": "Q5",
+      "prompt": "You help process vendor payments. An email comes in and it looks like it is from the Harborline CFO. It asks you to pay an invoice today to a new bank account. The email says it is urgent and asks you not to call because the person is stuck in meetings all day. What should you do?",
+      "options": {
+        "a": "Make the payment right away because the request came from the CFO",
+        "b": "Call the CFO using the company directory, and then report the email",
+        "c": "Reply to the email and ask the CFO to send a copy of the invoice first",
+        "d": "Send half of the payment now and the rest after the CFO confirms by email"
+      },
+      "answer": "b",
+      "indicator": "urgent_language",
+      "type": "Response",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "pre",
+      "number": 6,
+      "item_id": "Q6",
+      "prompt": "An email with the subject \"Payroll Update\" has the four details listed below. Which detail is the biggest red flag?",
+      "options": {
+        "a": "It mentions the exact date of the next payday and the pay period",
+        "b": "It greets you by your first name instead of a generic greeting",
+        "c": "It was sent on a weekday morning during normal business hours",
+        "d": "It asks you to sign in through its link to confirm bank details"
+      },
+      "answer": "d",
+      "indicator": "credential_request",
+      "type": "Recognition",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "pre",
+      "number": 7,
+      "item_id": "Q7",
+      "prompt": "The Harborline IT department sends an email from servicedesk@harborline.example. It says email may be down this Saturday night because of planned maintenance. The email has no links or attachments and does not ask you to do anything. It lists the help desk phone extension for questions. How should you treat this email?",
+      "options": {
+        "a": "It is phishing, so report it with the Report Phishing button",
+        "b": "It is phishing, so delete it without reading the rest",
+        "c": "It is legitimate, so there is nothing you need to do",
+        "d": "It is phishing, so warn your coworkers not to trust it"
+      },
+      "answer": "c",
+      "indicator": "none",
+      "type": "Legitimate",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "pre",
+      "number": 8,
+      "item_id": "Q8",
+      "prompt": "In this morning's team meeting, your manager said she would email the updated work schedule. An hour later, an email arrives from her normal @harborline.example address with a file named Schedule.xlsx. The email does not ask for anything else. What is the best response?",
+      "options": {
+        "a": "Open it, because it was expected and came from her real address",
+        "b": "Report it as phishing, because any attachment could be dangerous",
+        "c": "Delete it without opening it, just to be safe",
+        "d": "Reply and ask her to prove the email really came from her"
+      },
+      "answer": "a",
+      "indicator": "none",
+      "type": "Legitimate",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "pre",
+      "number": 9,
+      "item_id": "Q9",
+      "prompt": "A vendor emails you to say their bank account has changed. They ask you to update their payment details before the next invoice is paid. What is the safest way to check if the request is real?",
+      "options": {
+        "a": "Reply to the email and ask the vendor to confirm the new account",
+        "b": "Call the phone number listed in the signature of the email",
+        "c": "Update the details now and confirm with the vendor after payment",
+        "d": "Call the vendor using the number already in Harborline's records"
+      },
+      "answer": "d",
+      "indicator": "suspicious_sender",
+      "type": "Response",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "pre",
+      "number": 10,
+      "item_id": "Q10",
+      "prompt": "You typed your Harborline password into a sign-in page. A few seconds later, you notice the web address was not the real Harborline sign-in page. What should you do first?",
+      "options": {
+        "a": "Nothing, because you did not download or open any files",
+        "b": "Report it to the IT help desk right away and change your password",
+        "c": "Delete the email so nobody else on your team clicks the link",
+        "d": "Clear your browser history so the page is removed from your computer"
+      },
+      "answer": "b",
+      "indicator": "credential_request",
+      "type": "Response",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 1,
+      "item_id": "Q1",
+      "prompt": "This email says your Microsoft storage is over 80% full. Which detail would best show whether it really came from Microsoft?",
+      "options": {
+        "a": "The Microsoft logo at the top of the message",
+        "b": "The Microsoft Corporation address in the footer",
+        "c": "The full email address of the sender",
+        "d": "The \"Privacy Statement\" link at the bottom"
+      },
+      "answer": "c",
+      "indicator": "suspicious_sender",
+      "type": "Recognition",
+      "image": "Figure 4 - Post Q1.png",
+      "caption": "Email saying Microsoft storage is over 80% full."
+    },
+    {
+      "test": "post",
+      "number": 2,
+      "item_id": "Q2",
+      "prompt": "This email says your mailbox has reached its storage limit. Which line is meant to pressure you into acting quickly?",
+      "options": {
+        "a": "The warning that new incoming messages may be rejected",
+        "b": "The sender name \"Administration\" at the top of the message",
+        "c": "The \"cPanel Webmail\" banner at the top of the email",
+        "d": "The line saying replies to the message may not be monitored"
+      },
+      "answer": "a",
+      "indicator": "urgent_language",
+      "type": "Recognition",
+      "image": "Figure 5 - Post Q2.png",
+      "caption": "Email claiming a mailbox has reached its storage limit."
+    },
+    {
+      "test": "post",
+      "number": 3,
+      "item_id": "Q3",
+      "prompt": "You hover over a \"View document\" link in an email, and the address shows at the bottom of your screen. Harborline stores its shared files at https://files.harborline.example. Which address is safe to open?",
+      "options": {
+        "a": "https://harborline.example.doc-view.example",
+        "b": "https://harborline-files.example/share",
+        "c": "https://files.harb0rline.example/share",
+        "d": "https://files.harborline.example/share"
+      },
+      "answer": "d",
+      "indicator": "misleading_link",
+      "type": "Recognition",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 4,
+      "item_id": "Q4",
+      "prompt": "You open an attachment that looks like an Excel invoice. Instead of a spreadsheet, a browser window opens and asks you to enter your email password to view the file. What should you do?",
+      "options": {
+        "a": "Enter your password so the invoice opens and you can review it",
+        "b": "Close the window without typing anything, and report the email",
+        "c": "Try a different, older password to see if that one works instead",
+        "d": "Forward the attachment to the finance team so they can open it"
+      },
+      "answer": "b",
+      "indicator": "unexpected_attachment",
+      "type": "Response",
+      "image": "Figure 6 - Post Q4.png",
+      "caption": "Attachment that looks like an Excel file and asks for a password."
+    },
+    {
+      "test": "post",
+      "number": 5,
+      "item_id": "Q5",
+      "prompt": "Your manager sends you a text saying she is stuck in a meeting. She asks you to buy five gift cards for a client right away and text her the numbers on the back. What should you do?",
+      "options": {
+        "a": "Buy the gift cards right away because the request came from your manager",
+        "b": "Reply to the text and ask her which store she wants you to use",
+        "c": "Ask a coworker to help you pay for the cards until she gets back",
+        "d": "Contact her through Teams or a number you already have, then report it"
+      },
+      "answer": "d",
+      "indicator": "urgent_language",
+      "type": "Response",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 6,
+      "item_id": "Q6",
+      "prompt": "Someone who says they are from the Harborline IT help desk sends you a message. Which detail in their message is the biggest red flag?",
+      "options": {
+        "a": "They ask you to read them the code from your authenticator app",
+        "b": "They mention that a system update is planned for later this week",
+        "c": "They address you by your first name at the start of the message",
+        "d": "They send the message during normal work hours on a weekday"
+      },
+      "answer": "a",
+      "indicator": "credential_request",
+      "type": "Recognition",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 7,
+      "item_id": "Q7",
+      "prompt": "Harborline HR sends an email from hr@harborline.example. It reminds you that the yearly security training is due by the end of the month. It tells you to open the training portal the way you normally do and does not include any links or attachments. How should you treat this email?",
+      "options": {
+        "a": "It is phishing because it includes a deadline, so report it right away",
+        "b": "It is legitimate, so complete the training the way you normally do",
+        "c": "It is phishing, so delete it without opening anything",
+        "d": "It is phishing, so forward it to coworkers as a warning"
+      },
+      "answer": "b",
+      "indicator": "none",
+      "type": "Legitimate",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 8,
+      "item_id": "Q8",
+      "prompt": "On a Teams call, a coworker says she will email you the weekly shipping report. Later that day, an email arrives from her normal @harborline.example address with the report attached. The email does not ask for anything else. What is the best response?",
+      "options": {
+        "a": "Report it as phishing because it includes an attachment",
+        "b": "Delete it without opening it, just to be safe",
+        "c": "Open it, because it was expected and came from her real address",
+        "d": "Call the IT help desk and ask them to check it before you open it"
+      },
+      "answer": "c",
+      "indicator": "none",
+      "type": "Legitimate",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 9,
+      "item_id": "Q9",
+      "prompt": "An email that looks like it is from the Harborline CEO asks you for a quick favor. It says to reply only by email because she is traveling. What is the safest way to check that it is really her?",
+      "options": {
+        "a": "Contact her through the company directory or Teams instead",
+        "b": "Reply to the email and ask her to confirm that it is really her",
+        "c": "Check that her name is spelled correctly in the sender field",
+        "d": "Ask a coworker whether the email looks real to them"
+      },
+      "answer": "a",
+      "indicator": "suspicious_sender",
+      "type": "Response",
+      "image": null,
+      "caption": null
+    },
+    {
+      "test": "post",
+      "number": 10,
+      "item_id": "Q10",
+      "prompt": "Your phone shows a Microsoft 365 sign-in approval request, but you are not trying to sign in. What should you do?",
+      "options": {
+        "a": "Approve it so the notifications stop popping up on your phone",
+        "b": "Ignore it and keep working, since you did not request it",
+        "c": "Deny the request and report it to the IT help desk right away",
+        "d": "Approve it for now and change your password later today"
+      },
+      "answer": "c",
+      "indicator": "credential_request",
+      "type": "Response",
+      "image": null,
+      "caption": null
+    }
+  ]
+}
