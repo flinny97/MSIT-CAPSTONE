@@ -1,0 +1,32 @@
+/* Simple black and white style. Times New Roman everywhere: headings 16 pt, everything else 12 pt. */
+body { margin: 0; font-family: "Times New Roman", Times, serif; font-size: 12pt; background: #fff; color: #000; }
+.topbar { padding: 14px 24px; border-bottom: 2px solid #000; }
+.brand { font-weight: bold; font-size: 16pt; margin-right: 10px; }
+.page { max-width: 820px; margin: 20px auto; padding: 0 16px 40px; }
+h1, h2 { font-size: 16pt; font-weight: bold; }
+h1 { margin: 6px 0 10px; }
+h2 { margin: 18px 0 6px; }
+.card { border-bottom: 1px solid #000; padding: 6px 0 16px; margin: 0 0 14px; }
+label { display: block; margin: 8px 0 4px; }
+label.check, label.option { display: block; margin: 6px 0; }
+#pid { padding: 5px 8px; font: inherit; width: 140px; border: 1px solid #000; }
+textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 6px; border: 1px solid #000; }
+button, .button { display: inline-block; background: #000; color: #fff; border: 0; padding: 8px 18px;
+  font: inherit; font-weight: bold; cursor: pointer; text-decoration: none; margin-top: 12px; }
+button:disabled { opacity: 0.5; }
+.message { font-weight: bold; min-height: 1em; }
+.hidden { display: none; }
+.who { font-weight: bold; }
+figure { margin: 8px 0 12px; }
+figure img { max-width: 100%; max-height: 500px; border: 1px solid #000; }
+figcaption { font-style: italic; margin-top: 4px; }
+.missing { font-weight: bold; }
+.sure { margin-top: 10px; }
+.sure label, .scale label { display: inline-block; margin-right: 14px; }
+.hint { margin-right: 10px; }
+.lesson { line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; margin-bottom: 8px; }
+th, td { border: 1px solid #000; padding: 5px 8px; text-align: left; }
+th { font-weight: bold; }
+.ok, .no { font-weight: bold; }
+.tag { font-weight: normal; font-size: 12pt; }

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<p class="intro">Imagine you work at Harborline Logistics, a fictional company that uses Microsoft 365 Office Apps.
+Verified Harborline emails only come from addresses that end in @harborline.example. The real Harborline sign-in
+page is https://login.harborline.example. Answer every question and rate how sure you are for each question.</p>
+<p id="who" class="who"></p>
+<form id="test-form">
+  <div id="questions">Loading questions...</div>
+  <button type="submit" id="submit">Submit answers</button>
+  <p id="message" class="message" role="alert"></p>
+</form>
+<div id="result" class="card hidden"></div>
+{% endblock %}
+{% block scripts %}<script>initTest("{{ test }}");</script>{% endblock %}
