@@ -19,5 +19,8 @@ jobs:
       - name: Install test tools
         run: pip install -r requirements.txt
 
-      - name: Run unit tests with coverage
+      - name: Install the browser for the system tests
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run unit, integration, system, and acceptance tests with coverage
         run: pytest tests/ -v --cov=src --cov=webapp --cov-report=term-missing
