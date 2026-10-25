@@ -44,6 +44,18 @@ different point in the flow (Letaw, 2024).
 FR5 is separate from FR2 because a participant can correctly identify a message as
 phishing and still choose an unsafe action with it.
 
+### Requirement revisions
+
+The requirements above are the original Unit 3 versions. The changes below were made
+later and are what the system is now tested against.
+
+| Requirement | Revised version | When and why |
+| --- | --- | --- |
+| FR2 | Deliver a 10-question multiple choice pre-assessment with a confidence rating for each question. Questions are recognition, response, or legitimate-email items | Unit 6. Ten multiple choice questions keep the full session near the 30-minute goal in NFR3, and each answer is clearly right or wrong |
+| FR4 | Deliver a 10-question post-assessment that tests the same warning sign as the pre-assessment question with the same number, using a different example | Unit 6, to match FR2 |
+| FR5 | Record the answer chosen and the confidence rating for every question. The scoring bridge converts each answer into a classification and an action for the Unit 5 scoring code | Unit 6, because the questions changed to multiple choice |
+| NFR1 | Least-privilege access is in place: the researcher dashboard needs a password on a server and only opens locally without one. Encrypting the database file is still required before real data is collected | Unit 7 status update |
+
 ## Non-functional requirements
 
 Categories follow ISO/IEC 25010 (International Organization for Standardization, 2023).

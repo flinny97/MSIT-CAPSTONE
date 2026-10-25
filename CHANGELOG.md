@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.5-unit7-testing
+
+- Added integration tests (`tests/test_integration_flow.py`), system tests that run the
+  full participant journey in a real browser (`tests/system/`), and acceptance tests for
+  each Unit 3 requirement (`tests/acceptance/`). The suite grew from 69 to 94 tests, and
+  all pass with 99 percent coverage.
+- Fixed: answers sent in the wrong format crashed the submit route. They now get a clear
+  400 message.
+- Fixed: `true` was accepted as a 1 to 5 rating and saved as 1.
+- The test page now shows a progress counter, and missing questions are highlighted
+  until they are answered (from the Unit 6 usability review).
+- The researcher dashboard and results API need `CAPSTONE_ADMIN_PASSWORD` on a server and
+  only open locally without it.
+- FR2, FR4, and FR5 are recorded as revised in `docs/unit3-requirements-and-design.md`.
+- Added `scripts/stability_test.py` (20 participants at the same time, 3 rounds).
+- `run_synthetic_test.bat` now runs from its own folder.
+- The workflow installs Chromium and runs the system tests.
+- Added Dependabot (monthly dependency updates), issue templates for bugs,
+  enhancements, and content updates, the test summary report, the acceptance checklist,
+  and the maintenance plan.
+
 ## v0.4-unit6-integration
 
 - Added a Flask web app (`webapp/`) that connects the four modules: training lesson (M1),

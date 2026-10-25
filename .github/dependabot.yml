@@ -1,0 +1,17 @@
+# Check once a month for newer versions of the libraries and GitHub Actions
+# Each update comes as a pull request, so the tests run before it is merged
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    target-branch: "development"
+    labels: ["maintenance"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    target-branch: "development"
+    labels: ["maintenance"]
